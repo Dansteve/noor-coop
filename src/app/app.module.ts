@@ -54,10 +54,6 @@ import { Drivers, Storage } from '@ionic/storage';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import * as CordovaSQLiteDriver from 'localforage-cordovasqlitedriver';
 import { FlutterwaveModule } from './flutterwave/flutterwave.module';
-import { SharedCommonComponentsModule } from './components/common/shared-common-components.module';
-import { SharedWalletComponentsModule } from './components/wallet/shared-home-components.module';
-import { SharedItemsComponentsModule } from './components/items/shared-items-components.module';
-import { SharedProfileComponentsModule } from './components/profile/shared-profile-components.module';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -75,7 +71,7 @@ export function createTranslateLoader(http: HttpClient) {
       animated: false
     }),
     IonicStorageModule.forRoot({
-      name: '__mv109DB',
+      name: '__noorcoopDB',
       driverOrder: [CordovaSQLiteDriver._driver, Drivers.IndexedDB, Drivers.LocalStorage]
     }),
     AppRoutingModule,
@@ -85,11 +81,7 @@ export function createTranslateLoader(http: HttpClient) {
     ChartsModule,
     SharedPipeModule,
     SharedComponentsModule,
-    SharedCommonComponentsModule,
-    SharedItemsComponentsModule,
     SharedDirectivesModule,
-    SharedWalletComponentsModule,
-    SharedProfileComponentsModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

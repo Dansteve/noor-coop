@@ -25,6 +25,9 @@ export interface ErrorReturnInfo {
 export interface AnyInfo {
   [key: string]: any;
 }
+export interface UserData{
+  [key: string]: any;
+}
 
 
 

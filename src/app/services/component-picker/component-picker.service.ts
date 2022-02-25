@@ -1,6 +1,5 @@
 /* eslint-disable max-len */
 import { Injectable } from '@angular/core';
-import { ReferralPage } from '../../pages/member/referral/referral.page';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +7,6 @@ import { ReferralPage } from '../../pages/member/referral/referral.page';
 export class ComponentPickerService {
 
   componentsList: Array<any> = [
-   ReferralPage
   ];
 
   componentsListName = [];

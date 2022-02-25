@@ -5,10 +5,9 @@
 // tslint:disable:forin
 // tslint:disable:max-line-length
 import { Injectable } from '@angular/core';
-import moment from 'moment-timezone';
+import * as moment  from 'moment-timezone';
 import _ from 'lodash';
 import imageCompression from 'browser-image-compression';
-import * as BadWord from './badword.json';
 import { DomSanitizer } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
 const options = {
@@ -16,35 +15,6 @@ const options = {
   maxWidthOrHeight: 1920,
   useWebWorker: true
 };
-
-const badWord = BadWord;
-interface TargetData {
-  amount: string | number;
-  tenor: number;
-  roi: number;
-  expectedPayout: number;
-  expectedDate: string;
-  earnings: number;
-}
-
-interface RecurrentData {
-  amount: string | number;
-  tenor: number;
-  roi: number;
-  expectedPayout: number;
-  expectedDate: string;
-  earnings: number;
-  mthRoi: number;
-  full: number;
-}
-
-interface ProjectTargetData {
-  amount: string | number;
-  roi: number;
-  expectedPayout: number;
-  expectedDate: string;
-  earnings: number;
-}
 
 @Injectable({
   providedIn: 'root'
@@ -404,72 +374,6 @@ export class HelperMethodsService {
   /**
    *
    *
-   * @param amount
-   * @param tenor
-   * @returns
-   * @memberof HelperMethodsService
-   */
-  async targetInfo(amount: string | number, tenor: number, roiData: number): Promise<TargetData> {
-    const data = { amount, tenor, roi: 0, expectedPayout: 0, earnings: 0, expectedDate: '', startDate: '' };
-    if (roiData) {
-      data.roi = roiData;
-      data.earnings = (data.roi / 100) * parseFloat(amount.toString().split(',').join(''));
-      data.expectedPayout = parseFloat(amount.toString().split(',').join('')) + data.earnings;
-      data.startDate = moment().tz('Africa/Lagos').format('Do MMM. YYYY');
-      data.expectedDate = this.getDateAdd(moment().tz('Africa/Lagos').format(), tenor, 'days', 'Do MMM. YYYY');
-    }
-    // console.log(data);
-    return data;
-  }
-
-  /**
-   *
-   *
-   * @param amount
-   * @param tenor
-   * @param roi
-   * @returns
-   * @memberof HelperMethodsService
-   */
-  async projectSponsorship(amount: string | number, tenor: number, roi: number): Promise<ProjectTargetData> {
-    const data = { amount, roi, expectedPayout: 0, earnings: 0, tenor, expectedDate: '', startDate: '' };
-    data.earnings = (data.roi / 100) * parseFloat(amount.toString().split(',').join(''));
-    data.expectedPayout = parseFloat(amount.toString().split(',').join('')) + data.earnings;
-    data.startDate = moment().tz('Africa/Lagos').format('Do MMM. YYYY');
-    data.expectedDate = this.getDateAdd(moment().tz('Africa/Lagos').format(), tenor, 'months', 'Do MMM. YYYY');
-    return data;
-  }
-
-  /**
-   *
-   *
-   * @param amount
-   * @param tenor
-   * @returns
-   * @memberof HelperMethodsService
-   */
-  async getSavingsRio(amount: string | number, tenor: number, roiData: Array<any>, bandName: string): Promise<RecurrentData> {
-    const data = { amount, tenor, roi: 0, mthRoi: 0, expectedPayout: 0, earnings: 0, expectedDate: '', full: 0, dayRoi: 0 };
-    roiData.forEach(element => {
-      if (bandName.toLowerCase() === element.bandName.toLowerCase()) {
-        data.roi = element.roi;
-      }
-    });
-
-    data.dayRoi = data.roi / 100 / 365;
-    data.mthRoi = data.dayRoi * tenor;
-    data.full = (parseFloat(amount.toString())) + (data.mthRoi * parseFloat(amount.toString().split(',').join('')));
-    data.earnings = (data.mthRoi * parseFloat(amount.toString().split(',').join('')));
-    data.expectedPayout = parseFloat(amount.toString().split(',').join('')) + data.earnings;
-    // data.startDate = moment().tz('Africa/Lagos').format('Do MMM. YYYY');
-    data.expectedDate = this.getDateAdd(moment().tz('Africa/Lagos').format(), tenor, 'months', 'Do MMM. YYYY');
-    // console.log(data);
-    return data;
-  }
-
-  /**
-   *
-   *
    * @param email
    * @returns
    * @memberof HelperMethodsService
@@ -671,10 +575,6 @@ export class HelperMethodsService {
       day = '0' + day;
     }
     return [year, month, day].join('-');
-  }
-
-  getBadWord() {
-    return Array.from(badWord);
   }
 
   checkIfImageExist(url) {
