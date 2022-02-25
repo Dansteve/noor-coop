@@ -1,0 +1,7 @@
+{
+  "name": "Noor Coop",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
